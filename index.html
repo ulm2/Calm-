@@ -1,0 +1,992 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Take a Break Spot 🦋</title>
+  <style>
+    :root{
+      --ink:#4a2d3a;
+      --muted:#7a5061;
+      --card:#ffffffcc;
+      --pill:#ffffff9e;
+      --pill2:#ffffffc7;
+      --shadow: 0 18px 50px rgba(0,0,0,.12);
+      --shadow2: 0 10px 24px rgba(0,0,0,.10);
+      --radius: 22px;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      color:var(--ink);
+      min-height:100vh;
+      background:
+        radial-gradient(1200px 700px at 20% 0%, #ffe3ef 0%, transparent 60%),
+        radial-gradient(1000px 700px at 85% 20%, #f6d9ff 0%, transparent 55%),
+        linear-gradient(180deg, #fde8f1 0%, #f3cfe0 45%, #f2bfd9 100%);
+      padding: 18px 12px 40px;
+      overflow-x:hidden;
+    }
+    .container{
+      max-width: 520px;
+      margin: 0 auto;
+      position: relative;
+    }
+
+    /* floating butterflies */
+    .butterfly{
+      position:absolute;
+      opacity:.35;
+      pointer-events:none;
+      filter: blur(.2px);
+      animation: floaty 10s ease-in-out infinite;
+    }
+    .butterfly.b1{top:120px; left:-10px; font-size:46px; transform: rotate(-10deg); animation-duration:24s}
+    .butterfly.b2{top:260px; right:-14px; font-size:40px; transform: rotate(12deg); animation-duration:28s}
+    @keyframes floaty{
+      0%,100%{transform: translateY(0) translateX(0) rotate(var(--r,0deg))}
+      50%{transform: translateY(-18px) translateX(10px) rotate(calc(var(--r,0deg) + 3deg))}
+    }
+
+    header{
+      text-align:center;
+      padding: 10px 10px 14px;
+    }
+    h1{
+      margin: 8px 0 6px;
+      font-size: 38px;
+      letter-spacing:.3px;
+      color: var(--ink);
+      text-shadow: 0 2px 0 rgba(255,255,255,.65);
+    }
+    .subtitle{
+      color: var(--muted);
+      font-size: 16px;
+      line-height:1.35;
+      max-width: 420px;
+      margin: 0 auto 10px;
+    }
+    .tip{
+      display:inline-block;
+      margin-top:10px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.55);
+      border: 1px solid rgba(255,255,255,.65);
+      color: var(--muted);
+      font-weight: 600;
+      box-shadow: 0 8px 22px rgba(0,0,0,.08);
+    }
+
+    .tabs{
+      background: rgba(255,255,255,.22);
+      border: 1px solid rgba(255,255,255,.45);
+      border-radius: var(--radius);
+      padding: 10px;
+      box-shadow: var(--shadow2);
+      backdrop-filter: blur(12px);
+    }
+    .tabrow{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      justify-content:center;
+    }
+    .tab{
+      border:0;
+      cursor:pointer;
+      padding: 12px 16px;
+      border-radius:999px;
+      background: var(--pill);
+      color: var(--ink);
+      font-weight:800;
+      letter-spacing:.2px;
+      box-shadow: 0 8px 18px rgba(0,0,0,.08);
+      transition: transform .12s ease, background .12s ease;
+      user-select:none;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .tab:active{transform: scale(.98)}
+    .tab.active{
+      background: linear-gradient(135deg, #ff6fb1, #ff4fa0);
+      color:white;
+      box-shadow: 0 12px 26px rgba(255,79,160,.35);
+    }
+
+    .card{
+      margin-top:14px;
+      background: var(--card);
+      border: 1px solid rgba(255,255,255,.7);
+      border-radius: 28px;
+      padding: 22px 20px;
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(14px);
+      position:relative;
+    }
+    .card h2{
+      margin:0 0 10px;
+      font-size: 30px;
+      letter-spacing:.2px;
+    }
+    .card p{
+      margin:0;
+      font-size: 18px;
+      line-height: 1.5;
+      color: var(--ink);
+    }
+    .softbox{
+      margin-top:16px;
+      padding: 14px 16px;
+      border-radius: 18px;
+      background: rgba(255,255,255,.5);
+      border: 1px dashed rgba(255,79,160,.35);
+      color: var(--ink);
+      font-size: 17px;
+      line-height:1.45;
+    }
+    .softbox strong{font-weight:900}
+    .btn{
+      width:100%;
+      border:0;
+      margin-top:14px;
+      padding: 14px 16px;
+      border-radius: 18px;
+      font-size: 17px;
+      font-weight: 900;
+      cursor:pointer;
+      color:white;
+      background: linear-gradient(135deg, #ff6fb1, #ff4fa0);
+      box-shadow: 0 12px 26px rgba(255,79,160,.28);
+      transition: transform .12s ease;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .btn:active{transform: scale(.99)}
+    .btn.secondary{
+      background: rgba(255,255,255,.55);
+      color: var(--ink);
+      border: 1px solid rgba(255,255,255,.75);
+      box-shadow: 0 10px 22px rgba(0,0,0,.08);
+    }
+    .btn.row{
+      display:flex;
+      gap:10px;
+      flex-direction:column;
+    }
+
+    .list{
+      margin: 10px 0 0;
+      padding-left: 20px;
+      font-size: 18px;
+      line-height:1.55;
+    }
+    .list li{margin: 6px 0}
+    .kicker{
+      color: var(--muted);
+      font-weight:800;
+      margin-top: 2px;
+      font-size: 15px;
+    }
+
+    .zones{
+      display:flex;
+      flex-direction:column;
+      gap:14px;
+    }
+    .zone{
+      border-radius: 22px;
+      padding: 16px 16px 14px;
+      color:white;
+      box-shadow: 0 14px 30px rgba(0,0,0,.15);
+      position:relative;
+      overflow:hidden;
+    }
+    .zone h3{margin:0 0 6px; font-size: 26px}
+    .zone .feel{opacity:.95; font-size: 18px; font-weight:700}
+    .zone .q{margin-top:10px; font-size: 18px; font-weight:900}
+    .zone .big{margin-top:6px; font-size: 20px; font-weight: 1000; letter-spacing:.6px}
+    .zone .actions{margin-top: 8px; font-size: 18px; opacity:.95}
+    .zone .mini-butterfly{
+      position:absolute; right: 14px; top: 14px;
+      font-size: 34px; opacity: .25;
+    }
+
+    .z-blue{ background: linear-gradient(180deg, #4aa4e9, #2f79b7); }
+    .z-green{ background: linear-gradient(180deg, #62c05a, #3b8e3b); }
+    .z-orange{ background: linear-gradient(180deg, #ffa73b, #de7d06); }
+    .z-red{ background: linear-gradient(180deg, #f05656, #c93030); }
+
+    .pillmeter{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      margin-top:12px;
+      padding: 12px 14px;
+      border-radius: 18px;
+      background: rgba(255,255,255,.55);
+      border:1px solid rgba(255,255,255,.7);
+      box-shadow: 0 10px 22px rgba(0,0,0,.08);
+      color: var(--ink);
+    }
+    .meterbar{
+      flex:1;
+      height: 10px;
+      border-radius: 999px;
+      background: rgba(0,0,0,.08);
+      overflow:hidden;
+    }
+    .meterfill{
+      height:100%;
+      width:0%;
+      border-radius:999px;
+      background: linear-gradient(90deg, #ff6fb1, #ff4fa0);
+    }
+    .metertext{
+      font-weight: 1000;
+      min-width: 72px;
+      text-align:right;
+    }
+
+    .tiny{
+      font-size: 13px;
+      color: var(--muted);
+      margin-top: 14px;
+      text-align:center;
+    }
+
+    .toast{
+      position: fixed;
+      left: 50%;
+      bottom: 18px;
+      transform: translateX(-50%);
+      background: rgba(255,255,255,.92);
+      border: 1px solid rgba(255,255,255,.8);
+      border-radius: 16px;
+      padding: 12px 14px;
+      box-shadow: 0 14px 30px rgba(0,0,0,.18);
+      color: var(--ink);
+      font-weight: 900;
+      opacity:0;
+      pointer-events:none;
+      transition: opacity .18s ease, transform .18s ease;
+      max-width: 92vw;
+      text-align:center;
+    }
+    .toast.show{
+      opacity:1;
+      transform: translateX(-50%) translateY(-6px);
+    }
+
+    .grid2{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+      margin-top: 12px;
+    }
+    .mini-card{
+      background: rgba(255,255,255,.55);
+      border:1px solid rgba(255,255,255,.7);
+      border-radius: 18px;
+      padding: 14px 14px;
+      box-shadow: 0 10px 22px rgba(0,0,0,.08);
+    }
+    .mini-title{font-weight:1000; margin-bottom: 6px; font-size: 18px}
+    .mini-text{font-size: 17px; line-height:1.45; color: var(--ink)}
+    .tagline{font-size: 15px; font-weight: 800; color: var(--muted); margin-top:4px}
+
+    input[type="checkbox"]{ transform: scale(1.2); margin-right:10px; }
+    .checkline{ display:flex; align-items:flex-start; gap:8px; margin: 8px 0; font-size: 18px; }
+    .checkline label{ cursor:pointer; }
+    .divider{ height: 1px; background: rgba(0,0,0,.08); margin: 12px 0; }
+
+    /* Flutter breathing animation */
+    .breath-visual{
+      margin-top: 12px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+    .flutter{
+      position: relative;
+      width: 110px;
+      height: 70px;
+      filter: drop-shadow(0 10px 18px rgba(0,0,0,.10));
+      opacity: .95;
+    }
+    .flutter .body{
+      position:absolute;
+      left:50%;
+      top:50%;
+      width: 10px;
+      height: 34px;
+      background: rgba(74,45,58,.55);
+      border-radius: 999px;
+      transform: translate(-50%,-50%);
+    }
+    .flutter .wing{
+      position:absolute;
+      top:50%;
+      width: 46px;
+      height: 38px;
+      background: rgba(255,79,160,.32);
+      border: 1px solid rgba(255,79,160,.28);
+      border-radius: 999px;
+      backdrop-filter: blur(3px);
+    }
+    .flutter .wing.left{
+      left: 8px;
+      transform-origin: 100% 50%;
+      transform: translateY(-50%) rotate(18deg);
+      animation: flapL 1.4s ease-in-out infinite;
+    }
+    .flutter .wing.right{
+      right: 8px;
+      transform-origin: 0% 50%;
+      transform: translateY(-50%) rotate(-18deg);
+      animation: flapR 1.4s ease-in-out infinite;
+    }
+    @keyframes flapL{
+      0%,100%{transform: translateY(-50%) rotate(20deg) scaleX(1)}
+      50%{transform: translateY(-50%) rotate(2deg) scaleX(.92)}
+    }
+    @keyframes flapR{
+      0%,100%{transform: translateY(-50%) rotate(-20deg) scaleX(1)}
+      50%{transform: translateY(-50%) rotate(-2deg) scaleX(.92)}
+    }
+    .breath-instruction{
+      margin-top: 10px;
+      text-align:center;
+      font-weight: 1000;
+      color: var(--ink);
+    }
+
+    @media (min-width: 520px){
+      body{padding-top: 26px}
+      .grid2{grid-template-columns: 1fr 1fr;}
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="butterfly b1" style="--r:-10deg">🦋</div>
+    <div class="butterfly b2" style="--r:12deg">🦋</div>
+<header>
+      <h1>🦋 Take a Break Spot 🦋</h1>
+      <div class="subtitle">A calm corner page for a 10-year-old — tap a tab to choose what you need.</div>
+      <div class="subtitle" style="margin-top:6px; font-weight:900" id="greeting">Hi 💗</div>
+      <div class="tip">Tip: You can print this page too (Ctrl/Cmd + P)</div>
+    </header>
+
+    <section class="tabs" aria-label="Tabs">
+      <div class="tabrow">
+        <button class="tab active" data-tab="break">Take a Break</button>
+        <button class="tab" data-tab="steps">Butterfly Steps</button>
+        <button class="tab" data-tab="tools">My Calm Tools</button>
+        <button class="tab" data-tab="zones">Zones</button>
+        <button class="tab" data-tab="fun">Fun Break</button>
+        <button class="tab" data-tab="rewards">Rewards</button>
+      </div>
+    </section>
+
+    <section class="card tabpanel" id="tab-break">
+      <h2>Take a Break Spot</h2>
+      <p>This is a safe place to pause, breathe, and feel calm again. When you're ready, you can choose one calm tool and return to what you were doing.</p>
+
+      <div class="softbox">
+        If you need help, you can say: <strong>“I need a minute to calm down.”</strong>
+      </div>
+
+      <div class="pillmeter" title="Quiet progress tracker">
+        <div style="font-weight:1000">Calm Wins</div>
+        <div class="meterbar" aria-hidden="true"><div class="meterfill" id="wins-fill"></div></div>
+        <div class="metertext" id="wins-text">0/10</div>
+      </div>
+
+      <button class="btn" id="btn-calm">I calmed my body 🦋</button>
+      <button class="btn secondary" id="btn-undo" style="margin-top:10px">Undo (if tapped by accident)</button>
+
+      <div class="tiny">This page saves progress on this device.</div>
+    </section>
+
+    <section class="card tabpanel" id="tab-steps" style="display:none">
+      <h2>Butterfly Steps to Calm Down</h2>
+      <ul class="list">
+        <li><strong>Pause &amp; Land Gently</strong><br><span class="kicker">→ Like a butterfly landing softly on a flower.</span></li>
+        <li><strong>Breathe Like a Flutter</strong><br><span class="kicker">→ Slow breaths in… slow breaths out… 🌸 Feel your wings calm.</span></li>
+        <li><strong>Pick a Quiet Activity</strong><br><span class="kicker">→ Color, hum, squeeze, or close your eyes.</span></li>
+        <li><strong>Let Your Feelings Settle</strong><br><span class="kicker">→ Like pollen floating down — gently and safely.</span></li>
+        <li><strong>Fly Back Calmly</strong><br><span class="kicker">→ Ready to join again, light and peaceful.</span></li>
+      </ul>
+
+      <div class="divider"></div>
+      <button class="btn" id="btn-calm-2">I used the Butterfly Steps 🦋</button>
+      <button class="btn secondary" id="btn-breathe" style="margin-top:10px">Start a 60‑second calm breath</button>
+
+      <div class="softbox" id="breath-box" style="display:none; margin-top:12px">
+        <div class="breath-visual" aria-hidden="true">
+          <div class="flutter">
+            <div class="wing left"></div>
+            <div class="wing right"></div>
+            <div class="body"></div>
+          </div>
+        </div>
+        <div class="breath-instruction" id="breath-instruction">Breathe in…</div>
+        <div class="kicker" id="breath-timer" style="margin-top:8px">20 seconds</div>
+      </div>
+    </section>
+
+    <section class="card tabpanel" id="tab-tools" style="display:none">
+      <h2>My Calm Tools — I Choose 3!</h2>
+      <div class="kicker">Pick three tools that might help you today.</div>
+
+      <div style="margin-top:12px" id="tools-list">
+        </div>
+
+      <button class="btn" id="btn-save-tools">Save my 3 choices</button>
+      <button class="btn secondary" id="btn-clear-tools" style="margin-top:10px">Clear choices</button>
+
+      <div class="divider"></div>
+      <button class="btn" id="btn-calm-3">I tried a calm tool 🦋</button>
+    </section>
+
+    <section class="card tabpanel" id="tab-why" style="display:none">
+      <h2>Why This Animal Teaches Calmness</h2>
+      <div class="tagline">Butterfly</div>
+      <p style="margin-top:10px">Butterflies are gentle, colorful, and move with grace — ideal for teaching children to transition from chaos to calm with beauty and peace.</p>
+
+      <div class="divider"></div>
+      <button class="btn" id="btn-calm-why">I moved toward calm 🦋</button>
+    </section>
+
+    
+
+    <section class="card tabpanel" id="tab-zones" style="display:none">
+      <h2>Zones</h2>
+      <div class="kicker">Pick the zone that matches how your body feels.</div>
+
+      <div class="zones" style="margin-top:14px">
+        <div class="zone z-blue">
+          <div class="mini-butterfly">🦋</div>
+          <h3>Blue Zone</h3>
+          <div class="feel">Sad • Hurt • Sick • Tired</div>
+          <div class="q">What can I do?</div>
+          <div class="big">REST</div>
+          <div class="actions">Take a break • Ask for help • Talk to someone</div>
+        </div>
+
+        <div class="zone z-green">
+          <div class="mini-butterfly">🦋</div>
+          <h3>Green Zone</h3>
+          <div class="feel">Happy • Focused<br>Calm • Excited</div>
+          <div class="q">What can I do?</div>
+          <div class="big">GO</div>
+          <div class="actions">Finish my work • Help others • Share ideas</div>
+        </div>
+
+        <div class="zone z-orange">
+          <div class="mini-butterfly">🦋</div>
+          <h3>Orange Zone</h3>
+          <div class="feel">Surprised • Confused<br>Worried • Silly</div>
+          <div class="q">What can I do?</div>
+          <div class="big">SLOW DOWN</div>
+          <div class="actions">Take deep breaths • Talk to someone • Count to ten</div>
+        </div>
+
+        <div class="zone z-red">
+          <div class="mini-butterfly">🦋</div>
+          <h3>Red Zone</h3>
+          <div class="feel">Angry • Raging<br>Terrified • Annoyed</div>
+          <div class="q">What can I do?</div>
+          <div class="big">STOP</div>
+          <div class="actions">Take a time out • Run a lap • Squeeze a stress ball • Drink water</div>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+      <button class="btn" id="btn-calm-zones">I moved toward calm 🦋</button>
+    </section>
+
+    <section class="card tabpanel" id="tab-fun" style="display:none">
+      <h2>Fun Break</h2>
+      <p>After you try a calm step, you can do a little fun break.</p>
+
+      <div class="softbox" id="unlock-box" style="margin-top:14px">
+        <strong>Status:</strong> <span id="unlock-status">Try a calm step to unlock fun 💗</span>
+      </div>
+
+      <div class="grid2">
+        <div class="mini-card">
+          <div class="mini-title">🧩 Riddle</div>
+          <div class="mini-text" id="riddle-q">Press “New” for a riddle.</div>
+          <div class="kicker" id="riddle-a" style="display:none"></div>
+          <button class="btn secondary" id="btn-riddle" style="margin-top:10px">New riddle</button>
+          <button class="btn secondary" id="btn-show-riddle" style="margin-top:10px">Show answer</button>
+        </div>
+        <div class="mini-card">
+          <div class="mini-title">😂 Kid Joke</div>
+          <div class="mini-text" id="joke-q">Press “New” for a joke.</div>
+          <div class="kicker" id="joke-a" style="display:none"></div>
+          <button class="btn secondary" id="btn-joke" style="margin-top:10px">New joke</button>
+          <button class="btn secondary" id="btn-show-joke" style="margin-top:10px">Show punchline</button>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+      <button class="btn secondary" id="btn-mini-mission">Give me a tiny tidy mission 🧼</button>
+      <div class="softbox" id="mission-box" style="display:none; margin-top:12px"></div>
+      <button class="btn" id="btn-mission-done" style="display:none; margin-top:10px">I finished it ✅</button>
+
+      <div class="tiny">Fun is a reward for calming — not a test.</div>
+    </section>
+
+    <section class="card tabpanel" id="tab-rewards" style="display:none">
+      <h2>Rewards</h2>
+      <p>We count calm wins up to 10. Parents can trade wins for rewards.</p>
+      <div class="softbox" style="margin-top:14px">
+        <strong>Child name:</strong>
+        <div style="margin-top:10px; display:flex; gap:10px; flex-wrap:wrap">
+          <input id="child-name" type="text" placeholder="Type name…" style="flex:1; min-width: 190px; padding:12px 14px; border-radius:16px; border:1px solid rgba(255,255,255,.8); background: rgba(255,255,255,.6); font-size:16px; font-weight:800; color: var(--ink)" />
+          <button class="btn secondary" id="btn-save-name" style="margin-top:0; width:auto; padding:12px 16px; border-radius:16px">Save name</button>
+        </div>
+      </div>
+
+      <div class="pillmeter" style="margin-top:14px">
+        <div style="font-weight:1000">Calm Wins</div>
+        <div class="meterbar" aria-hidden="true"><div class="meterfill" id="wins-fill-2"></div></div>
+        <div class="metertext" id="wins-text-2">0/10</div>
+      </div>
+
+      <div class="softbox" style="margin-top:14px">
+        <strong>Progress tracker:</strong> Each time you calm your body, you earn 1 Calm Win (up to 10).
+      </div>
+
+      <div class="divider"></div>
+      <button class="btn secondary" id="btn-clear-progress">Clear my Calm Wins (back to 0)</button>
+      <button class="btn secondary" id="btn-reset" style="margin-top:10px">Parent reset (back to 0)</button>
+      <div class="tiny">Reset asks for a simple parent check.</div>
+    </section>
+
+    <div class="toast" id="toast">Nice job 💗</div>
+  </div>
+
+  <script>
+    // --- Storage keys ---
+    const KEY_WINS = "calm_wins_v1";
+    const KEY_UNLOCK = "fun_unlocked_until_v1";
+    const KEY_TOOLS = "calm_tools_choices_v1";
+    const KEY_NAME = "child_name_v1";
+
+    // --- Data ---
+    const calmTools = [
+      { id:"tool_ball", label:"✋ Squeeze a ball" },
+      { id:"tool_draw", label:"🎨 Draw a picture" },
+      { id:"tool_breath", label:"🧘 Take deep breaths" },
+      { id:"tool_write", label:"📝 Write my feelings" },
+      { id:"tool_cold", label:"❄️ Use a cold pack" },
+      { id:"tool_rock", label:"🪑 Rock in the chair" },
+      { id:"tool_mirror", label:"🪞 Look in the mirror" },
+      { id:"tool_hug", label:"🧸 Hug a stuffed animal" },
+
+      /* extra calm tools */
+      { id:"tool_water", label:"💧 Drink a cup of water" },
+      { id:"tool_stretch", label:"🤸 Do 5 gentle stretches" },
+      { id:"tool_music", label:"🎧 Listen to a calm song" },
+      { id:"tool_count", label:"🔢 Count slowly to 20" },
+      { id:"tool_walk", label:"🚶 Take a slow hallway walk" },
+      { id:"tool_butterflytap", label:"🦋 Butterfly taps (tap shoulders left/right)" },
+      { id:"tool_smell", label:"🌿 Smell something nice (soap, lotion, mint)" }
+    ];
+
+    const riddles = [
+      { q:"What has a face and two hands but no arms or legs?", a:"A clock." },
+      { q:"What has to be broken before you can use it?", a:"An egg." },
+      { q:"What gets wetter the more it dries?", a:"A towel." },
+      { q:"What has many keys but can’t open a single lock?", a:"A piano." },
+      { q:"What goes up but never comes down?", a:"Your age." },
+      { q:"I’m full of holes but I still hold water. What am I?", a:"A sponge." },
+      { q:"What can you catch but not throw?", a:"A cold." },
+      { q:"What has a neck but no head?", a:"A bottle." },
+      { q:"What has one eye but can’t see?", a:"A needle." },
+      { q:"What has words but never speaks?", a:"A book." },
+      { q:"What runs around a backyard but never moves?", a:"A fence." },
+      { q:"What has a thumb and four fingers but isn’t alive?", a:"A glove." },
+      { q:"What can travel around the world while staying in one corner?", a:"A stamp." },
+      { q:"What has lots of teeth but can’t bite?", a:"A comb." },
+      { q:"What kind of band never plays music?", a:"A rubber band." },
+      { q:"What building has the most stories?", a:"A library." },
+      { q:"What has legs but doesn’t walk?", a:"A table." },
+      { q:"I have a tail and a head, but no body. What am I?", a:"A coin." },
+      { q:"What begins with T, ends with T, and has T in it?", a:"A teapot." },
+      { q:"What can you hold in your left hand but not in your right?", a:"Your right elbow." },
+      { q:"What has a ring but no finger?", a:"A telephone." },
+      { q:"What is so fragile that saying its name breaks it?", a:"Silence." },
+      { q:"What has a bed but never sleeps?", a:"A river." },
+      { q:"What has an eye but no face?", a:"A hurricane." },
+      { q:"What comes once in a minute, twice in a moment, but never in a thousand years?", a:"The letter M." }
+    ];
+
+    const jokes = [
+      { q:"Why did the teddy bear skip dessert?", a:"Because it was already stuffed!" },
+      { q:"What do clouds wear under their shorts?", a:"Thunderwear!" },
+      { q:"Why did the bicycle fall over?", a:"Because it was two‑tired!" },
+      { q:"What did one wall say to the other wall?", a:"I’ll meet you at the corner!" },
+      { q:"Why don’t eggs tell jokes?", a:"They’d crack each other up!" },
+      { q:"What do you call cheese that isn’t yours?", a:"Nacho cheese!" },
+      { q:"What do you call a sleeping bull?", a:"A bulldozer!" },
+      { q:"Why did the math book look sad?", a:"Because it had too many problems." },
+      { q:"What do you get when you cross a snowman and a vampire?", a:"Frostbite!" },
+      { q:"Why did the cookie go to the doctor?", a:"Because it felt crummy!" },
+      { q:"How do you make a tissue dance?", a:"Put a little boogie in it!" },
+      { q:"Why did the scarecrow win an award?", a:"Because it was outstanding in its field!" },
+      { q:"What do you call a bear with no teeth?", a:"A gummy bear!" },
+      { q:"Why can’t your nose be 12 inches long?", a:"Because then it would be a foot!" },
+      { q:"What kind of tree fits in your hand?", a:"A palm tree!" },
+      { q:"What do you call a fish wearing a bowtie?", a:"Sofishticated!" },
+      { q:"Why did the student eat their homework?", a:"Because the teacher said it was a piece of cake!" },
+      { q:"What did the zero say to the eight?", a:"Nice belt!" },
+      { q:"Why did the banana go to the hospital?", a:"Because it wasn’t peeling well!" },
+      { q:"What do you call a dinosaur that is sleeping?", a:"A dino‑snore!" },
+      { q:"Why did the computer get cold?", a:"It left its Windows open!" },
+      { q:"What do you call a cow that plays an instrument?", a:"A moosician!" },
+      { q:"Why did the golfer bring two pairs of pants?", a:"In case they got a hole in one!" },
+      { q:"What do you call a boomerang that doesn’t come back?", a:"A stick!" },
+      { q:"Why did the tomato turn red?", a:"Because it saw the salad dressing!" }
+    ];
+
+    const tidyMissions = [
+      "Pick up 5 items and put them where they belong.",
+      "Clear one small surface (a corner of the table or desk).",
+      "Put all dirty clothes into the hamper (or one basket).",
+      "Throw away 5 pieces of trash.",
+      "Put books into one neat stack.",
+      "Set a 3‑minute timer and tidy only until it ends."
+    ];
+
+    // --- State ---
+    let wins = 0;
+
+    // --- Helpers ---
+    function $(id){ return document.getElementById(id); }
+    function getName(){ return (localStorage.getItem(KEY_NAME) || "").trim(); }
+    function setGreeting(){
+      const n = getName();
+      const g = $("greeting");
+      if (g) g.textContent = n ? `Hi, ${n} 💗` : "Hi 💗";
+    }
+
+    function clamp(n,min,max){ return Math.max(min, Math.min(max,n)); }
+
+    function loadWins(){
+      const saved = localStorage.getItem(KEY_WINS);
+      wins = saved ? parseInt(saved,10) : 0;
+      if (Number.isNaN(wins)) wins = 0;
+      wins = clamp(wins, 0, 10);
+      renderWins();
+    }
+
+    function saveWins(){
+      localStorage.setItem(KEY_WINS, String(wins));
+    }
+
+    function renderWins(){
+      const pct = (wins/10)*100;
+      $("wins-fill").style.width = pct + "%";
+      $("wins-text").textContent = wins + "/10";
+      $("wins-fill-2").style.width = pct + "%";
+      $("wins-text-2").textContent = wins + "/10";
+      renderUnlockStatus();
+    }
+
+    function toast(msg){
+      const t = $("toast");
+      t.textContent = msg;
+      t.classList.add("show");
+      setTimeout(()=>t.classList.remove("show"), 1600);
+    }
+
+    function unlockFun(minutes=20){
+      const until = Date.now() + minutes*60*1000;
+      localStorage.setItem(KEY_UNLOCK, String(until));
+      renderUnlockStatus();
+    }
+
+    function isFunUnlocked(){
+      const until = parseInt(localStorage.getItem(KEY_UNLOCK) || "0", 10);
+      return Date.now() < until;
+    }
+
+    function renderUnlockStatus(){
+      const unlocked = isFunUnlocked();
+      $("unlock-status").textContent = unlocked
+        ? "Fun is unlocked 💗 Pick a riddle or joke!"
+        : "Try a calm step to unlock fun 💗";
+      $("unlock-box").style.borderStyle = unlocked ? "solid" : "dashed";
+    }
+
+    function addWin(){
+      if (wins >= 10){
+        toast(getName() ? `You did it, ${getName()}! 10/10 🦋` : "You did it! 10/10 🦋");
+        unlockFun(30);
+        return;
+      }
+      wins++;
+      saveWins();
+      renderWins();
+      unlockFun(30);
+      if (wins === 10){
+        toast(getName() ? `Amazing, ${getName()}! 10 calm wins 🦋` : "Amazing! 10 calm wins 🦋");
+      } else {
+        toast(getName() ? `Nice job, ${getName()} 💗` : "Nice job 💗");
+      }
+    }
+
+    function undoWin(){
+      wins = clamp(wins-1, 0, 10);
+      saveWins();
+      renderWins();
+      toast("Undo done");
+    }
+
+    // --- Tabs ---
+    function setTab(name){
+      document.querySelectorAll(".tab").forEach(b=>{
+        b.classList.toggle("active", b.dataset.tab === name);
+      });
+      document.querySelectorAll(".tabpanel").forEach(p=>p.style.display="none");
+      const panel = $("tab-" + name);
+      if (panel) panel.style.display = "block";
+      // ensure unlock text updated when entering fun
+      if (name === "fun") renderUnlockStatus();
+    }
+
+    // --- Tools checklist ---
+    function renderTools(){
+      const wrap = $("tools-list");
+      wrap.innerHTML = "";
+      const saved = JSON.parse(localStorage.getItem(KEY_TOOLS) || "[]");
+      const selected = new Set(saved);
+
+      calmTools.forEach(tool=>{
+        const line = document.createElement("div");
+        line.className = "checkline";
+        line.innerHTML = `
+          <label style="display:flex; gap:10px; align-items:flex-start">
+            <input type="checkbox" id="${tool.id}" ${selected.has(tool.id) ? "checked" : ""} />
+            <span>${tool.label}</span>
+          </label>
+        `;
+        wrap.appendChild(line);
+      });
+    }
+
+    function saveTools(){
+      const chosen = calmTools.filter(t => {
+        const el = $(t.id);
+        return el && el.checked;
+      }).map(t=>t.id);
+
+      if (chosen.length !== 3){
+        toast("Choose 3 tools 🦋");
+        return;
+      }
+      localStorage.setItem(KEY_TOOLS, JSON.stringify(chosen));
+      toast("Saved 💗");
+    }
+
+    function clearTools(){
+      localStorage.setItem(KEY_TOOLS, JSON.stringify([]));
+      renderTools();
+      toast("Cleared");
+    }
+
+    // --- Breathing timer ---
+    let breathInterval = null;
+    function startBreath(){
+      $("breath-box").style.display = "block";
+      let remaining = 20;
+      $("breath-timer").textContent = remaining + " seconds";
+      if (breathInterval) clearInterval(breathInterval);
+
+      let breathPhase = 0;
+      breathInterval = setInterval(()=>{
+        remaining--;
+        breathPhase++;
+        const instr = $("breath-instruction");
+        if (instr){
+          instr.textContent = (breathPhase % 4 < 2) ? "Breathe in…" : "Breathe out…";
+        }
+        $("breath-timer").textContent = remaining + " seconds";
+        if (remaining <= 0){
+          clearInterval(breathInterval);
+          breathInterval = null;
+          $("breath-timer").textContent = "Done 🦋";
+          toast(getName() ? `Breathing done, ${getName()} 💗` : "Breathing done 💗");
+        }
+      }, 1000);
+    }
+
+    // --- Fun content ---
+    let riddleIndex = -1;
+    let jokeIndex = -1;
+
+    function nextRandomIndex(listLength, lastIndex){
+      if (listLength <= 1) return 0;
+      let idx = Math.floor(Math.random() * listLength);
+      // avoid immediate repeats
+      if (idx === lastIndex) idx = (idx + 1 + Math.floor(Math.random() * (listLength-1))) % listLength;
+      return idx;
+    }
+
+function requireUnlock(action){
+      if (!isFunUnlocked()){
+        toast("Try a calm step first 💗");
+        return false;
+      }
+      return true;
+    }
+
+    function newRiddle(){
+      if (!requireUnlock()) return;
+      riddleIndex = nextRandomIndex(riddles.length, riddleIndex);
+      $("riddle-q").textContent = riddles[riddleIndex].q;
+      $("riddle-a").style.display = "none";
+      $("riddle-a").textContent = "Answer: " + riddles[riddleIndex].a;
+      toast("New riddle 🧩");
+    }
+
+    function showRiddle(){
+      if (!requireUnlock()) return;
+      if (riddleIndex < 0) { newRiddle(); return; }
+      $("riddle-a").style.display = "block";
+      toast("Answer shown");
+    }
+
+    function newJoke(){
+      if (!requireUnlock()) return;
+      jokeIndex = nextRandomIndex(jokes.length, jokeIndex);
+      $("joke-q").textContent = jokes[jokeIndex].q;
+      $("joke-a").style.display = "none";
+      $("joke-a").textContent = "Punchline: " + jokes[jokeIndex].a;
+      toast("New joke 😂");
+    }
+
+    function showJoke(){
+      if (!requireUnlock()) return;
+      if (jokeIndex < 0) { newJoke(); return; }
+      $("joke-a").style.display = "block";
+      toast("Punchline shown");
+    }
+
+    function tinyMission(){
+      if (!requireUnlock()) return;
+      const pick = tidyMissions[Math.floor(Math.random()*tidyMissions.length)];
+      $("mission-box").style.display = "block";
+      $("btn-mission-done").style.display = "block";
+      $("mission-box").innerHTML = "<strong>Tiny mission:</strong> " + pick + "<div class='kicker' style='margin-top:6px'>When you finish, tap <strong>“I finished it ✅”</strong>.</div>";
+      toast("Mission ready 🧼");
+    }
+
+    // --- Parent reset ---
+    function clearProgress(){
+      if (!confirm("Clear your Calm Wins back to 0?")) return;
+      wins = 0;
+      saveWins();
+      renderWins();
+      toast(getName() ? `Fresh start, ${getName()} 💗` : "Fresh start 💗");
+    }
+
+    function parentReset(){
+      const code = prompt("Parent check: type 42 to reset calm wins.");
+      if (code === null) return;
+      if (code.trim() !== "42"){
+        toast("Not reset");
+        return;
+      }
+      wins = 0;
+      saveWins();
+      renderWins();
+      toast("Reset to 0");
+    }
+
+    // --- Init ---
+    document.addEventListener("DOMContentLoaded", ()=>{
+      // tabs
+      document.querySelectorAll(".tab").forEach(btn=>{
+        btn.addEventListener("click", ()=> setTab(btn.dataset.tab));
+      });
+
+      // wins
+      loadWins();
+      setGreeting();
+
+      // prefill name field if present
+      const nameInput = $("child-name");
+      if (nameInput){ nameInput.value = getName(); }
+
+      // ask once if no name saved
+      if (!getName()){
+        const asked = localStorage.getItem("name_prompted_v1");
+        if (!asked){
+          localStorage.setItem("name_prompted_v1","1");
+          setTimeout(()=>{
+            const n = prompt("What name should I use? (Parent can set this too)");
+            if (n && n.trim()){
+              localStorage.setItem(KEY_NAME, n.trim());
+              if (nameInput) nameInput.value = n.trim();
+              setGreeting();
+              toast(`Hi, ${n.trim()} 💗`);
+            }
+          }, 450);
+        }
+      }
+
+      // save name button
+      const saveNameBtn = $("btn-save-name");
+      if (saveNameBtn && nameInput){
+        saveNameBtn.addEventListener("click", ()=>{
+          const n = (nameInput.value || "").trim();
+          localStorage.setItem(KEY_NAME, n);
+          setGreeting();
+          toast(n ? `Saved: ${n} 💗` : "Name cleared");
+        });
+      }
+
+      // buttons that award wins (multiple places)
+      $("btn-calm").addEventListener("click", addWin);
+      $("btn-calm-2").addEventListener("click", addWin);
+      if ($("btn-calm-3")) $("btn-calm-3").addEventListener("click", addWin);
+      
+      if ($("btn-calm-why")) $("btn-calm-why").addEventListener("click", addWin);
+      if ($("btn-calm-zones")) $("btn-calm-zones").addEventListener("click", addWin);
+      $("btn-undo").addEventListener("click", undoWin);
+
+      // breathing
+      $("btn-breathe").addEventListener("click", startBreath);
+
+      // tools
+      renderTools();
+      $("btn-save-tools").addEventListener("click", saveTools);
+      $("btn-clear-tools").addEventListener("click", clearTools);
+
+      // fun
+      $("btn-riddle").addEventListener("click", newRiddle);
+      $("btn-show-riddle").addEventListener("click", showRiddle);
+      $("btn-joke").addEventListener("click", newJoke);
+      $("btn-show-joke").addEventListener("click", showJoke);
+      $("btn-mini-mission").addEventListener("click", tinyMission);
+      $("btn-mission-done").addEventListener("click", ()=>{
+        addWin();
+        $("btn-mission-done").style.display = "none";
+        toast(getName() ? `Nice follow-through, ${getName()} 💗` : "Nice follow-through 💗");
+      });
+
+      // parent reset
+      $("btn-clear-progress").addEventListener("click", clearProgress);
+      $("btn-reset").addEventListener("click", parentReset);
+
+      // default tab
+      setTab("break");
+    });
+  </script>
+</body>
+</html>
