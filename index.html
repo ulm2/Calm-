@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -29,7 +30,7 @@
     body{
       margin:0;
       min-height:100vh;
-      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+      font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
       color:var(--ink);
       background:
         radial-gradient(1100px 700px at 5% 0%, #dff4ff 0%, transparent 60%),
@@ -42,10 +43,7 @@
     .f1{top:32px;left:-8px}.f2{top:200px;right:-4px}.f3{bottom:120px;left:8px}
     @keyframes floaty{0%,100%{transform:translateY(0) rotate(-4deg)}50%{transform:translateY(-14px) rotate(4deg)}}
 
-    header{
-      text-align:center;
-      padding:10px 8px 18px;
-    }
+    header{text-align:center;padding:10px 8px 18px}
     h1{margin:6px 0 8px;font-size:clamp(2rem,4.5vw,3.5rem);letter-spacing:.2px}
     .sub{max-width:850px;margin:0 auto 8px;color:var(--muted);font-size:1.03rem;line-height:1.45}
     .pillrow{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:12px}
@@ -154,11 +152,11 @@
 
     <section class="tabs">
       <div class="tabrow">
-        <button class="tab active" data-tab="home">Calm Corner</button>
-        <button class="tab" data-tab="zones">Zones</button>
-        <button class="tab" data-tab="tools">Calm Tools</button>
-        <button class="tab" data-tab="steps">Butterfly Steps</button>
-        <button class="tab" data-tab="support">Support Plan</button>
+        <button class="tab active" data-tab="home" type="button">Calm Corner</button>
+        <button class="tab" data-tab="zones" type="button">Zones</button>
+        <button class="tab" data-tab="tools" type="button">Calm Tools</button>
+        <button class="tab" data-tab="steps" type="button">Butterfly Steps</button>
+        <button class="tab" data-tab="support" type="button">Support Plan</button>
       </div>
     </section>
 
@@ -168,27 +166,49 @@
           <h2 class="sectionTitle">What do you need right now?</h2>
           <div class="kicker">This page is built to help a child pause, identify feelings, and choose one small next step.</div>
           <div class="checkin">
-            <button class="checkBtn z-blue" data-zone="blue">💙 I feel low<span>sad, hurt, tired, sick</span></button>
-            <button class="checkBtn z-green" data-zone="green">💚 I feel ready<span>calm, focused, happy, excited</span></button>
-            <button class="checkBtn z-orange" data-zone="orange">🧡 I feel unsettled<span>worried, confused, silly, surprised</span></button>
-            <button class="checkBtn z-red" data-zone="red">❤️ I feel big emotions<span>angry, terrified, frustrated, overwhelmed</span></button>
+            <button class="checkBtn z-blue" data-zone="blue" type="button">💙 I feel low<span>sad, hurt, tired, sick</span></button>
+            <button class="checkBtn z-green" data-zone="green" type="button">💚 I feel ready<span>calm, focused, happy, excited</span></button>
+            <button class="checkBtn z-orange" data-zone="orange" type="button">🧡 I feel unsettled<span>worried, confused, silly, surprised</span></button>
+            <button class="checkBtn z-red" data-zone="red" type="button">❤️ I feel big emotions<span>angry, terrified, frustrated, overwhelmed</span></button>
           </div>
           <div class="output" id="quickHelp">
             <h4>Start here</h4>
             <div class="small">Pick the feeling zone that sounds closest to your body right now.</div>
           </div>
           <div class="btnrow">
-            <button class="btn" id="btnWin">I used a calm step</button>
-            <button class="btn secondary" id="btnUndo">Undo</button>
+            <button class="btn" id="btnWin" type="button">I used a calm step</button>
+            <button class="btn secondary" id="btnUndo" type="button">Undo</button>
           </div>
           <div class="meter">
             <div style="font-weight:1000">Calm Wins</div>
             <div class="bar"><div class="fill" id="winFill"></div></div>
             <div class="meterText" id="winText">0/10</div>
           </div>
+
+          <div class="output hidden" id="jokeBox">
+            <h4>🎉 Calm reward joke</h4>
+            <div id="jokeText" class="small"></div>
+          </div>
+
         </div>
 
-     <section class="panel tabpanel hidden" id="tab-zones">
+        <div class="card">
+          <h3 style="margin:0 0 8px">Quick reminders</h3>
+          <ul style="margin:0;padding-left:18px;line-height:1.55">
+            <li>You do not need to fix everything at once.</li>
+            <li>Pick one calm step and try it.</li>
+            <li>Getting help is a strong choice.</li>
+            <li>Small progress still counts.</li>
+          </ul>
+          <div class="printBox">
+            <div class="badge">🖨️ Print-friendly</div>
+            <div class="small" style="margin-top:8px">Use your browser print command for a simple paper copy.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel tabpanel hidden" id="tab-zones">
       <h2 class="sectionTitle">What zone are you in?</h2>
       <div class="kicker">This keeps the familiar four-zone structure, but adds cleaner grouping and more supportive action suggestions.</div>
       <div class="zoneGrid">
@@ -271,18 +291,18 @@
       <div class="kicker">Pick up to 3 favorites.</div>
       <div class="toolGrid" id="toolGrid"></div>
       <div class="btnrow">
-        <button class="btn" id="saveTools">Save my favorites</button>
-        <button class="btn secondary" id="clearTools">Clear</button>
+        <button class="btn" id="saveTools" type="button">Save my favorites</button>
+        <button class="btn secondary" id="clearTools" type="button">Clear</button>
       </div>
       <div class="output" id="toolOutput">
         <h4>Suggested favorites</h4>
-        <div class="small">Select</div>
+        <div class="small">Select up to three calm tools that are most likely to help.</div>
       </div>
     </section>
 
     <section class="panel tabpanel hidden" id="tab-steps">
-      <h2 class="sectionTitle"></h2>
-      <div class="kicker"></div>
+      <h2 class="sectionTitle">Butterfly Steps</h2>
+      <div class="kicker">A gentle sequence for helping the body slow down.</div>
       <div class="steps">
         <div class="step"><div class="num">1</div><div><h4>Pause and land softly</h4><p>Stop your body. Put both feet on the floor, chair, or cushion. You are safe.</p></div></div>
         <div class="step"><div class="num">2</div><div><h4>Breathe in, breathe out</h4><p>In through the nose for 4. Out slowly for 4. Try 5 rounds.</p></div></div>
@@ -291,7 +311,7 @@
         <div class="step"><div class="num">5</div><div><h4>Return when ready</h4><p>When your body feels safer, you can go back, ask for support, or take one more break.</p></div></div>
       </div>
       <div class="btnrow">
-        <button class="btn" id="breathBtn">Start a 30-second breathing timer</button>
+        <button class="btn" id="breathBtn" type="button">Start a 30-second breathing timer</button>
       </div>
       <div class="output hidden" id="breathBox">
         <h4 id="breathText">Breathe in…</h4>
@@ -325,8 +345,8 @@
           <h3 style="margin:0 0 8px">Website improvements included</h3>
           <ul style="margin:0;padding-left:18px;line-height:1.55">
             <li>More balanced colors</li>
-            <li></li>
-            <li></li>
+            <li>Cleaner spacing and structure</li>
+            <li>Working tabs and interactions</li>
             <li>Progress tracker and printable pages</li>
           </ul>
         </div>
@@ -373,6 +393,69 @@
     let wins = 0;
     let breathTimer = null;
 
+    const rewardJokes = [
+      "Why did the teddy bear skip dessert? Because it was stuffed!",
+      "What do clouds wear under their shorts? Thunderpants!",
+      "Why did the banana go to the doctor? It wasn’t peeling well!",
+      "What kind of tree fits in your hand? A palm tree!",
+      "Why did the cookie go to the nurse? It felt crummy!",
+      "What do you call a sleeping bull? A bulldozer!",
+      "Why did the student eat their homework? The teacher said it was a piece of cake!",
+      "What do you call cheese that is not yours? Nacho cheese!",
+      "Why did the frog take the bus to school? His car got toad away!",
+      "What do bees brush their hair with? A honeycomb!",
+      "What do you call a pig that knows karate? A pork chop!",
+      "Why did the orange stop rolling? It ran out of juice!",
+      "How do cows stay up to date? They read the moos-paper!",
+      "What do you call a bear with no teeth? A gummy bear!",
+      "Why was the math book sad? It had too many problems!",
+      "What kind of music do balloons hate? Pop music!",
+      "What do you call a dinosaur that crashes his car? Tyrannosaurus wrecks!",
+      "Why are ghosts bad at lying? Because you can see right through them!",
+      "What do cats like to eat on a hot day? A mice cream cone!",
+      "Why did the golfer bring two pairs of pants? In case he got a hole in one!",
+      "What did one wall say to the other wall? I’ll meet you at the corner!",
+      "Why can’t your nose be 12 inches long? Because then it would be a foot!",
+      "What do elves learn in school? The elf-abet!",
+      "What did the plate say to the other plate? Dinner is on me!",
+      "Why did the scarecrow win an award? Because he was outstanding in his field!",
+      "What do you call a fish wearing a bowtie? Sofishticated!",
+      "Why did the tomato blush? Because it saw the salad dressing!",
+      "What kind of key opens a banana? A monkey!",
+      "What did the pencil say to the paper? Dot your i’s and I’ll draw the line!",
+      "Why did the music teacher need a ladder? To reach the high notes!",
+      "What do you call a snowman in summer? A puddle!",
+      "Why did the chicken join a band? Because it had the drumsticks!",
+      "What do you call a dog magician? A labracadabrador!",
+      "Why did the melon jump into the lake? It wanted to be a watermelon!",
+      "What do you get when you cross a rabbit with shellfish? An oyster bunny!",
+      "Why was the broom late? It swept in!",
+      "What did the big flower say to the little flower? Hey, bud!",
+      "Why do ducks have tail feathers? To cover their butt-quacks!",
+      "What kind of button won’t unbutton? A belly button!",
+      "What do you call an alligator in a vest? An investigator!",
+      "Why did the moon skip dinner? It was already full!",
+      "What did the ocean say to the beach? Nothing, it just waved!",
+      "Why did the pony sing a lullaby? It was a little horse!",
+      "What kind of room has no doors? A mushroom!",
+      "Why did the bike fall over? Because it was two-tired!",
+      "What did one volcano say to the other? I lava you!",
+      "Why did the pirate go to school? To improve his arrrticulation!",
+      "What do you call a happy cowboy? A jolly rancher!",
+      "Why did the grape stop in the middle of the road? It ran out of juice!",
+      "What do you call a boomerang that won’t come back? A stick!",
+      "Why did the duck get a time-out? It was being a wise quacker!",
+      "What did the janitor say when he jumped out of the closet? Supplies!",
+      "Why did the egg hide? It was a little chicken!",
+      "What do you call a very fast turtle? A shell racer!",
+      "Why did the pencil win a prize? Because it had a sharp idea!"
+    ];
+
+    function getRandomJoke(){
+      return rewardJokes[Math.floor(Math.random() * rewardJokes.length)];
+    }
+
+
     function $(id){ return document.getElementById(id); }
     function toast(msg){
       const t = $('toast');
@@ -385,7 +468,8 @@
     function setTab(name){
       document.querySelectorAll('.tab').forEach(btn=>btn.classList.toggle('active', btn.dataset.tab === name));
       document.querySelectorAll('.tabpanel').forEach(p=>p.classList.add('hidden'));
-      $('tab-' + name).classList.remove('hidden');
+      const panel = $('tab-' + name);
+      if(panel) panel.classList.remove('hidden');
     }
 
     function loadWins(){
@@ -393,16 +477,25 @@
       wins = Number.isFinite(raw) ? Math.max(0, Math.min(10, raw)) : 0;
       renderWins();
     }
+
     function renderWins(){
       $('winFill').style.width = (wins * 10) + '%';
       $('winText').textContent = wins + '/10';
     }
+
+    function showJokeReward(){
+      $('jokeBox').classList.remove('hidden');
+      $('jokeText').textContent = getRandomJoke();
+    }
+
     function addWin(){
       wins = Math.min(10, wins + 1);
       localStorage.setItem(WIN_KEY, String(wins));
       renderWins();
+      showJokeReward();
       toast('Nice job');
     }
+
     function undoWin(){
       wins = Math.max(0, wins - 1);
       localStorage.setItem(WIN_KEY, String(wins));
@@ -415,24 +508,19 @@
       $('quickHelp').innerHTML = '<h4>' + data.title + '</h4><ul>' + data.items.map(item => '<li>' + item + '</li>').join('') + '</ul>';
     }
 
-    function renderTools(){
-      const saved = new Set(JSON.parse(localStorage.getItem(TOOL_KEY) || '[]'));
-      const grid = $('toolGrid');
-      grid.innerHTML = '';
-      tools.forEach(tool => {
-        const card = document.createElement('button');
-        card.className = 'toolCard' + (saved.has(tool.id) ? ' active' : '');
-        card.type = 'button';
-        card.dataset.id = tool.id;
-        card.innerHTML = '<div class="toolTop"><div class="toolIcon">' + tool.icon + '</div><div class="toolTitle">' + tool.title + '</div></div><div class="toolText">' + tool.text + '</div>';
-        card.addEventListener('click', () => toggleTool(tool.id));
-        grid.appendChild(card);
-      });
-      renderToolOutput();
-    }
-
     function getSelectedTools(){
       return new Set(JSON.parse(localStorage.getItem(TOOL_KEY) || '[]'));
+    }
+
+    function renderToolOutput(){
+      const set = getSelectedTools();
+      const chosen = tools.filter(t => set.has(t.id));
+      const box = $('toolOutput');
+      if(!chosen.length){
+        box.innerHTML = '<h4>Suggested favorites</h4><div class="small">Select up to three calm tools that are most likely to help.</div>';
+        return;
+      }
+      box.innerHTML = '<h4>Saved favorites</h4><ul>' + chosen.map(t => '<li><strong>' + t.title + ':</strong> ' + t.text + '</li>').join('') + '</ul>';
     }
 
     function toggleTool(id){
@@ -446,15 +534,20 @@
       renderTools();
     }
 
-    function renderToolOutput(){
-      const set = getSelectedTools();
-      const chosen = tools.filter(t => set.has(t.id));
-      const box = $('toolOutput');
-      if(!chosen.length){
-        box.innerHTML = '<h4>Suggested favorites</h4><div class="small">Select up to three calm tools that are most likely to help.</div>';
-        return;
-      }
-      box.innerHTML = '<h4>Saved favorites</h4><ul>' + chosen.map(t => '<li><strong>' + t.title + ':</strong> ' + t.text + '</li>').join('') + '</ul>';
+    function renderTools(){
+      const saved = getSelectedTools();
+      const grid = $('toolGrid');
+      grid.innerHTML = '';
+      tools.forEach(tool => {
+        const card = document.createElement('button');
+        card.className = 'toolCard' + (saved.has(tool.id) ? ' active' : '');
+        card.type = 'button';
+        card.dataset.id = tool.id;
+        card.innerHTML = '<div class="toolTop"><div class="toolIcon">' + tool.icon + '</div><div class="toolTitle">' + tool.title + '</div></div><div class="toolText">' + tool.text + '</div>';
+        card.addEventListener('click', () => toggleTool(tool.id));
+        grid.appendChild(card);
+      });
+      renderToolOutput();
     }
 
     function clearTools(){
